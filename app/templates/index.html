@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Medicare Hospital | Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="layout">
+
+<aside class="sidebar">
+
+    <div class="logo">
+        <div class="logo-icon">✚</div>
+        <div>
+            <h2>Medicare</h2>
+            <span>Hospital Management</span>
+        </div>
+    </div>
+
+    <div class="nav-title">Main Menu</div>
+
+    <div class="nav">
+        <a href="/" class="active">▣ &nbsp; Dashboard</a>
+        <a href="/patients">♙ &nbsp; Patients</a>
+        <a href="/doctors">⚕ &nbsp; Doctors</a>
+        <a href="/appointments">▣ &nbsp; Appointments</a>
+    </div>
+
+    <div class="nav-title">Management</div>
+
+    <div class="nav">
+        <a href="#">▤ &nbsp; Departments</a>
+        <a href="#">▣ &nbsp; Medical Records</a>
+        <a href="#">⚙ &nbsp; Settings</a>
+    </div>
+
+</aside>
+
+
+<main class="main">
+
+    <header class="topbar">
+
+        <input class="search" type="text" placeholder="Search patients, doctors...">
+
+        <div class="user">
+            <div>
+                <strong>Hospital Admin</strong><br>
+                <small>Administrator</small>
+            </div>
+
+            <div class="avatar">HA</div>
+        </div>
+
+    </header>
+
+
+    <section class="content">
+
+        <div class="page-title">
+
+            <div>
+                <h1>Dashboard</h1>
+                <p>Welcome back, Hospital Admin. Here's today's overview.</p>
+            </div>
+
+            <a class="btn" href="/appointments">+ New Appointment</a>
+
+        </div>
+
+
+        <div class="stats">
+
+            <div class="stat-card">
+                <div class="stat-top">
+                    <p>Total Patients</p>
+                    <div class="stat-icon">♙</div>
+                </div>
+
+                <h2>{{ patients|length }}</h2>
+                <p>Registered patients</p>
+            </div>
+
+
+            <div class="stat-card">
+                <div class="stat-top">
+                    <p>Total Doctors</p>
+                    <div class="stat-icon">⚕</div>
+                </div>
+
+                <h2>{{ doctors|length }}</h2>
+                <p>Medical professionals</p>
+            </div>
+
+
+            <div class="stat-card">
+                <div class="stat-top">
+                    <p>Appointments</p>
+                    <div class="stat-icon">▣</div>
+                </div>
+
+                <h2>{{ appointments|length }}</h2>
+                <p>Scheduled appointments</p>
+            </div>
+
+
+            <div class="stat-card">
+                <div class="stat-top">
+                    <p>Departments</p>
+                    <div class="stat-icon">✚</div>
+                </div>
+
+                <h2>8</h2>
+                <p>Active departments</p>
+            </div>
+
+        </div>
+
+
+        <div class="grid">
+
+            <div class="panel">
+
+                <div class="panel-header">
+                    <h3>Recent Appointments</h3>
+                    <a href="/appointments">View All →</a>
+                </div>
+
+                <table>
+
+                    <tr>
+                        <th>Patient</th>
+                        <th>Doctor</th>
+                        <th>Department</th>
+                        <th>Status</th>
+                    </tr>
+
+                    {% for appointment in appointments %}
+
+                    <tr>
+
+                        <td><strong>{{ appointment.patient }}</strong></td>
+
+                        <td>{{ appointment.doctor }}</td>
+
+                        <td>{{ appointment.department }}</td>
+
+                        <td>
+
+                            {% if appointment.status == "Pending" %}
+                            <span class="badge pending">
+                                {{ appointment.status }}
+                            </span>
+
+                            {% else %}
+                            <span class="badge">
+                                {{ appointment.status }}
+                            </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </table>
+
+            </div>
+
+
+            <div class="panel">
+
+                <div class="panel-header">
+                    <h3>Available Doctors</h3>
+                    <a href="/doctors">View All →</a>
+                </div>
+
+                {% for doctor in doctors %}
+
+                <div style="padding:15px 0;border-bottom:1px solid #eee;">
+
+                    <strong>{{ doctor.name }}</strong>
+
+                    <p style="font-size:12px;color:#788598;margin-top:5px;">
+                        {{ doctor.specialization }}
+                    </p>
+
+                    <span class="badge">
+                        {{ doctor.status }}
+                    </span>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Medicare | Appointments</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="layout">
+
+<aside class="sidebar">
+
+<div class="logo">
+<div class="logo-icon">✚</div>
+
+<div>
+<h2>Medicare</h2>
+<span>Hospital Management</span>
+</div>
+</div>
+
+<div class="nav-title">Main Menu</div>
+
+<div class="nav">
+
+<a href="/">▣ &nbsp; Dashboard</a>
+<a href="/patients">♙ &nbsp; Patients</a>
+<a href="/doctors">⚕ &nbsp; Doctors</a>
+<a href="/appointments" class="active">▣ &nbsp; Appointments</a>
+
+</div>
+
+</aside>
+
+
+<main class="main">
+
+<header class="topbar">
+
+<strong>Appointment Management</strong>
+
+<div class="user">
+<strong>Hospital Admin</strong>
+<div class="avatar">HA</div>
+</div>
+
+</header>
+
+
+<section class="content">
+
+<div class="page-title">
+
+<div>
+<h1>Appointments</h1>
+<p>Schedule and manage patient appointments.</p>
+</div>
+
+</div>
+
+
+<div class="form-card">
+
+<h3>Schedule Appointment</h3>
+
+<form action="/add_appointment" method="POST">
+
+<div class="form-grid">
+
+<div class="form-group">
+<label>Patient Name</label>
+<input name="patient" required placeholder="Patient name">
+</div>
+
+<div class="form-group">
+<label>Doctor Name</label>
+<input name="doctor" required placeholder="Doctor name">
+</div>
+
+<div class="form-group">
+<label>Department</label>
+
+<select name="department">
+<option>Cardiology</option>
+<option>Neurology</option>
+<option>Orthopedics</option>
+<option>General Medicine</option>
+</select>
+
+</div>
+
+<div class="form-group">
+<label>Date</label>
+<input type="date" name="date" required>
+</div>
+
+<div class="form-group">
+<label>Time</label>
+<input type="time" name="time" required>
+</div>
+
+</div>
+
+<div class="form-submit">
+<button class="btn">Schedule Appointment</button>
+</div>
+
+</form>
+
+</div>
+
+
+<br>
+
+
+<div class="panel">
+
+<div class="panel-header">
+<h3>Upcoming Appointments</h3>
+</div>
+
+<table>
+
+<tr>
+<th>ID</th>
+<th>Patient</th>
+<th>Doctor</th>
+<th>Department</th>
+<th>Date</th>
+<th>Time</th>
+<th>Status</th>
+</tr>
+
+{% for appointment in appointments %}
+
+<tr>
+
+<td>{{ appointment.id }}</td>
+
+<td>
+<strong>{{ appointment.patient }}</strong>
+</td>
+
+<td>{{ appointment.doctor }}</td>
+
+<td>{{ appointment.department }}</td>
+
+<td>{{ appointment.date }}</td>
+
+<td>{{ appointment.time }}</td>
+
+<td>
+
+{% if appointment.status == "Pending" %}
+
+<span class="badge pending">
+{{ appointment.status }}
+</span>
+
+{% else %}
+
+<span class="badge">
+{{ appointment.status }}
+</span>
+
+{% endif %}
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+</body>
+</html>
