@@ -10,6 +10,15 @@ pipeline {
                     url: 'https://github.com/Subasri8122005/hospital-management-devops.git'
             }
         }
+        stage('Verify Kubernetes Access') {
+    steps {
+        bat 'where kubectl'
+        bat 'kubectl config current-context'
+        bat 'kubectl get nodes'
+    }
+}
+
+    
 
         stage('Build Docker Image') {
             steps {
