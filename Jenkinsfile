@@ -2,8 +2,9 @@ pipeline {
     agent any
 
     environment {
-        KUBECONFIG = "${env.USERPROFILE}\\.kube\\config"
-    }
+    KUBECONFIG = "${env.USERPROFILE}\\.kube\\config"
+}
+
 
     stages {
 
