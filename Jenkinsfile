@@ -1,3 +1,4 @@
+
 pipeline {
     agent any
 
@@ -16,12 +17,16 @@ pipeline {
             }
         }
 
-        stage('Run Docker Container') {
+        stage('Deploy to Kubernetes') {
             steps {
-                bat '''
-                    docker rm -f hospital-management-app 2>NUL || exit /B 0
-                    docker run -d --name hospital-management-app -p 5000:5000 hospital-management-app:latest
-                '''
+                bat 'kubectl apply -f k8s/'
+            }
+        }
+
+        stage('Verify Deployment') {
+            steps {
+                bat 'kubectl get pods'
+                bat 'kubectl get service'
             }
         }
     }
