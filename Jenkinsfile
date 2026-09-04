@@ -1,11 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-    KUBECONFIG = "${env.USERPROFILE}\\.kube\\config"
-}
-
-
     stages {
 
         stage('Checkout') {
@@ -17,8 +12,8 @@ pipeline {
 
         stage('Verify Kubernetes Access') {
             steps {
-                bat 'kubectl config current-context'
-                bat 'kubectl get nodes'
+                bat 'kubectl --kubeconfig "C:\\ProgramData\\Jenkins\\.kube\\config" config current-context'
+                bat 'kubectl --kubeconfig "C:\\ProgramData\\Jenkins\\.kube\\config" get nodes'
             }
         }
 
@@ -30,14 +25,14 @@ pipeline {
 
         stage('Deploy to Kubernetes') {
             steps {
-                bat 'kubectl apply -f k8s/'
+                bat 'kubectl --kubeconfig "C:\\ProgramData\\Jenkins\\.kube\\config" apply -f k8s/'
             }
         }
 
         stage('Verify Deployment') {
             steps {
-                bat 'kubectl get pods'
-                bat 'kubectl get service'
+                bat 'kubectl --kubeconfig "C:\\ProgramData\\Jenkins\\.kube\\config" get pods'
+                bat 'kubectl --kubeconfig "C:\\ProgramData\\Jenkins\\.kube\\config" get service'
             }
         }
     }
