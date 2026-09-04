@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hospital-management-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hospital-management-app
+  template:
+    metadata:
+      labels:
+        app: hospital-management-app
+    spec:
+      containers:
+        - name: hospital-management-app
+          image: hospital-management-app:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000
